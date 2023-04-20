@@ -34,7 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Integer userId) {
-        return null;
+        User user = this.userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User", "ID", userId)
+        );
+        return this.userToDTO(user);
     }
 
     @Override
