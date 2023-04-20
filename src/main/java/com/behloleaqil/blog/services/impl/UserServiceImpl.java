@@ -8,6 +8,7 @@ import com.behloleaqil.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -42,12 +43,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return null;
+        List<User> users = this.userRepo.findAll();
+        return users.stream().map(this::userToDTO).toList();
     }
 
     @Override
     public void deleteUser(Integer userId) {
-
+        User user = this.userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User", "ID", userId)
+        );
+        this.userRepo.delete(user);
     }
 
     private User dtoToUser(UserDTO userDTO) {
