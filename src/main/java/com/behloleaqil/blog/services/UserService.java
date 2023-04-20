@@ -1,6 +1,7 @@
 package com.behloleaqil.blog.services;
 
 import com.behloleaqil.blog.payloads.UserDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
