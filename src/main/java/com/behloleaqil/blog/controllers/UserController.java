@@ -4,6 +4,7 @@ import com.behloleaqil.blog.payloads.APIResponse;
 import com.behloleaqil.blog.payloads.UserDTO;
 import com.behloleaqil.blog.services.UserService;
 import com.behloleaqil.blog.services.impl.UserServiceImpl;
+import jakarta.validation.Valid;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class UserController {
 
 
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
         UserDTO createdUserDTO = this.userService.createUser(userDTO);
         return new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
     }
@@ -43,7 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Integer userId) {
+    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO, @PathVariable Integer userId) {
         UserDTO createdUserDTO = this.userService.updateUser(userDTO, userId);
         return ResponseEntity.ok(createdUserDTO);
     }
