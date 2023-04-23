@@ -13,7 +13,8 @@ public interface PostService {
 
     PostDTO getSinglePost(Integer postId);
 
-    List<PostDTO> getAllPosts();
+
+    List<PostDTO> getAllPosts(int pageNumber, int pageSize);
 
     void deletePost(Integer postId);
 

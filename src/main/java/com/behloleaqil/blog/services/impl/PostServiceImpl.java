@@ -11,6 +11,8 @@ import com.behloleaqil.blog.repositories.UserRepo;
 import com.behloleaqil.blog.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -62,8 +64,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = this.postRepo.findAll();
+    public List<PostDTO> getAllPosts(int pageNumber, int pageSize) {
+        Page<Post> pagePost = this.postRepo.findAll(PageRequest.of(pageNumber, pageSize));
+        List<Post> posts = pagePost.getContent();
         return posts.stream().map((singlePost) -> this.modelMapper.map(singlePost, PostDTO.class)).toList();
     }
 
