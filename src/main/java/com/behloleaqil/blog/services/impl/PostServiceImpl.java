@@ -45,13 +45,11 @@ public class PostServiceImpl implements PostService {
         Category category = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "ID", categoryId));
         Post foundPost = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "ID", postId));
 
-
-        Post updatedPost = this.modelMapper.map(postDTO, Post.class);
-        foundPost.setImageName("default.png");
+        foundPost.setImageName(postDTO.getImageName());
         foundPost.setCategory(category);
         foundPost.setUser(user);
-        foundPost.setTitle(updatedPost.getTitle());
-        foundPost.setContent(updatedPost.getContent());
+        foundPost.setTitle(postDTO.getTitle());
+        foundPost.setContent(postDTO.getContent());
         foundPost.setAddedDate(new Date());
         this.postRepo.save(foundPost);
         return this.modelMapper.map(foundPost, PostDTO.class);
