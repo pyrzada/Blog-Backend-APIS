@@ -47,10 +47,11 @@ public class PostController {
     public ResponseEntity<PostResponse> getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumebr,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
     ) {
         return new ResponseEntity<>(
-                this.postService.getAllPosts(pageNumebr, pageSize, sortBy),
+                this.postService.getAllPosts(pageNumebr, pageSize, sortBy, sortDirection),
                 HttpStatus.OK
         );
     }

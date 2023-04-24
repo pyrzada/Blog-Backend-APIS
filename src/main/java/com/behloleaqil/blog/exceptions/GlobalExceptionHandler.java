@@ -1,6 +1,7 @@
 package com.behloleaqil.blog.exceptions;
 
 import com.behloleaqil.blog.payloads.APIResponse;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -30,5 +31,12 @@ public class GlobalExceptionHandler {
             resp.put(fieldName, defaultMessage);
         });
         return new ResponseEntity<Map<String, String>>(resp, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PropertyReferenceException.class)
+    public ResponseEntity<APIResponse> propertyReferenceExcepption(PropertyReferenceException ex) {
+        String message = ex.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<APIResponse>(apiResponse, HttpStatus.NOT_FOUND);
     }
 }
