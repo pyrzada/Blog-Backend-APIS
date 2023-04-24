@@ -1,10 +1,10 @@
 package com.behloleaqil.blog.controllers;
 
+import com.behloleaqil.blog.config.AppConstants;
 import com.behloleaqil.blog.payloads.APIResponse;
 import com.behloleaqil.blog.payloads.PostDTO;
 import com.behloleaqil.blog.payloads.PostResponse;
 import com.behloleaqil.blog.services.PostService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,13 +51,13 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPosts(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumebr,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-            @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
     ) {
         return new ResponseEntity<>(
-                this.postService.getAllPosts(pageNumebr, pageSize, sortBy, sortDirection),
+                this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDirection),
                 HttpStatus.OK
         );
     }
