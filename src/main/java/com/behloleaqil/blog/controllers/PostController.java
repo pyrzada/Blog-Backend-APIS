@@ -2,6 +2,7 @@ package com.behloleaqil.blog.controllers;
 
 import com.behloleaqil.blog.payloads.APIResponse;
 import com.behloleaqil.blog.payloads.PostDTO;
+import com.behloleaqil.blog.payloads.PostResponse;
 import com.behloleaqil.blog.services.PostService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,14 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts(
+    public ResponseEntity<PostResponse> getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumebr,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize
     ) {
-        List<PostDTO> postDTOList = this.postService.getAllPosts(pageNumebr, pageSize);
-        return new ResponseEntity<>(postDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(
+                this.postService.getAllPosts(pageNumebr, pageSize),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/posts/{postId}")

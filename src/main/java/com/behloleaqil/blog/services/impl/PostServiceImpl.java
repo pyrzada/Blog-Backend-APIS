@@ -5,6 +5,7 @@ import com.behloleaqil.blog.entities.Post;
 import com.behloleaqil.blog.entities.User;
 import com.behloleaqil.blog.exceptions.ResourceNotFoundException;
 import com.behloleaqil.blog.payloads.PostDTO;
+import com.behloleaqil.blog.payloads.PostResponse;
 import com.behloleaqil.blog.repositories.CategoryRepo;
 import com.behloleaqil.blog.repositories.PostRepo;
 import com.behloleaqil.blog.repositories.UserRepo;
@@ -64,10 +65,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts(int pageNumber, int pageSize) {
+    public PostResponse getAllPosts(int pageNumber, int pageSize) {
         Page<Post> pagePost = this.postRepo.findAll(PageRequest.of(pageNumber, pageSize));
-        List<Post> posts = pagePost.getContent();
-        return posts.stream().map((singlePost) -> this.modelMapper.map(singlePost, PostDTO.class)).toList();
+        List<PostDTO> postDTOs = pagePost.getContent().stream().map((singlePost) -> this.modelMapper.map(singlePost, PostDTO.class)).toList();
+
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDTOs);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+        return postResponse;
     }
 
     @Override
