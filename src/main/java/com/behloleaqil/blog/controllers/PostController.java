@@ -6,7 +6,6 @@ import com.behloleaqil.blog.payloads.PostDTO;
 import com.behloleaqil.blog.payloads.PostResponse;
 import com.behloleaqil.blog.services.FileService;
 import com.behloleaqil.blog.services.PostService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +16,6 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
