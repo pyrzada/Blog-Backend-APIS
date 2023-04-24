@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -65,8 +66,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPosts(int pageNumber, int pageSize) {
-        Page<Post> pagePost = this.postRepo.findAll(PageRequest.of(pageNumber, pageSize));
+    public PostResponse getAllPosts(int pageNumber, int pageSize, String sortBy) {
+        Page<Post> pagePost = this.postRepo.findAll(
+                PageRequest.of(
+                        pageNumber,
+                        pageSize,
+                        Sort.by(sortBy)
+                ));
         List<PostDTO> postDTOs = pagePost.getContent().stream().map((singlePost) -> this.modelMapper.map(singlePost, PostDTO.class)).toList();
 
 
