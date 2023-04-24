@@ -43,6 +43,12 @@ public class PostController {
         return new ResponseEntity<>(postDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/posts/search/{keywords}")
+    public ResponseEntity<List<PostDTO>> searchPost(@PathVariable String keywords) {
+        List<PostDTO> postDTOList = this.postService.searchPost(keywords);
+        return new ResponseEntity<>(postDTOList, HttpStatus.OK);
+    }
+
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumebr,
