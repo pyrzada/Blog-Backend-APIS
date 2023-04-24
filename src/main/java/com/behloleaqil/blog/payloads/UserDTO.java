@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -22,4 +25,8 @@ public class UserDTO {
 
     @NotEmpty
     private String about;
+
+    @NotEmpty
+    private List<CommentDTO> comments = new ArrayList<>();
+
 }
