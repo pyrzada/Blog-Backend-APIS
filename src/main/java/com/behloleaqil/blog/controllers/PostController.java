@@ -4,12 +4,16 @@ import com.behloleaqil.blog.config.AppConstants;
 import com.behloleaqil.blog.payloads.APIResponse;
 import com.behloleaqil.blog.payloads.PostDTO;
 import com.behloleaqil.blog.payloads.PostResponse;
+import com.behloleaqil.blog.services.FileService;
 import com.behloleaqil.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,6 +22,11 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    FileService fileService;
+    @Value("${project.image}")
+    private String path;
 
     @PostMapping("/users/{userId}/category/{categoryId}/posts")
     public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO, @PathVariable Integer userId, @PathVariable Integer categoryId) {
@@ -73,5 +82,17 @@ public class PostController {
         this.postService.deletePost(postId);
         return new ResponseEntity<>(new APIResponse("Post Deleted Successfully", true), HttpStatus.OK);
     }
+
+    @PostMapping("/post/image/upload/{postId}")
+    public ResponseEntity<PostDTO> uploadImage(
+            @RequestParam("image") MultipartFile image,
+            @PathVariable("postId") Integer postId
+    ) throws IOException {
+        PostDTO post = this.postService.getSinglePost(postId);
+        String fileName = this.fileService.uploadImage(path, image);
+        post.setImageName(fileName);
+        return new ResponseEntity<>(this.postService.updatePost(post, postId), HttpStatus.OK);
+    }
+
 
 }

@@ -11,6 +11,7 @@ public interface PostService {
     PostDTO createPost(PostDTO postDTO, Integer userId, Integer categoryId);
 
     PostDTO updatePost(PostDTO postDTO, Integer postId, Integer userId, Integer categoryId);
+    PostDTO updatePost(PostDTO postDTO, Integer postId);
 
     PostDTO getSinglePost(Integer postId);
 
